@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Text, Textarea } from "@nextui-org/react";
 import { db, auth } from "../config/Firebase";
 import { collection, serverTimestamp, addDoc } from "firebase/firestore";

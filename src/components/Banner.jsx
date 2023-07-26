@@ -3,7 +3,7 @@ import Entry from "./Entry";
 import Chart from "./Chart";
 import History from "./History";
 import Authenticator from "./Authenticator";
-import { Button, Text } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 const Banner = ({ data }) => {
   const [activeTab, setActiveTab] = useState("New Entry");
@@ -18,7 +18,8 @@ const Banner = ({ data }) => {
     } else if (activeTab === "Chart") {
       return <Chart data={data} />;
     } else {
-      return <History data={data} />;
+      // return <History data={data} dbSnap={snap} />;
+      return <History data={data}/>;
     }
   };
 
@@ -28,7 +29,7 @@ const Banner = ({ data }) => {
         <Button
           flat
           bordered={activeTab === "New Entry"}
-          onClick={() => handleTabChange("New Entry")}
+          onPress={() => handleTabChange("New Entry")}
           style={{ flex: 1, justifyContent: "center", height:50 }}
           css={{borderRadius:0}}
         >
@@ -37,7 +38,7 @@ const Banner = ({ data }) => {
         <Button
           flat
           bordered={activeTab === "Chart"}
-          onClick={() => handleTabChange("Chart")}
+          onPress={() => handleTabChange("Chart")}
           style={{ flex: 1, justifyContent: "center", height:50 }}
           css={{borderRadius:0}}
         >
@@ -46,7 +47,7 @@ const Banner = ({ data }) => {
         <Button
           flat
           bordered={activeTab === "History"}
-          onClick={() => handleTabChange("History")}
+          onPress={() => handleTabChange("History")}
           style={{ flex: 1, justifyContent: "center" , height:50}}
           css={{borderRadius:0}}
         >

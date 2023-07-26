@@ -4,11 +4,26 @@ import MoodChart from "./MoodChart";
 // import Gauge from "./Gauge";
 
 const Chart = ({ data }) => {
-  // console.log("chart: " + data)
+  
+  const getEntries = async () => {
+    if (!user) return [];
+    const q = query(collection(db, "Users", user.uid, "Entries"));
+    const querySnapshot = await getDocs(q);
+    const entries = [];
+    querySnapshot.forEach((doc) => {
+      entries.push({ id: doc.id, ...doc.data() });
+    });
+    entries.sort((a, b) => a.datetime.seconds - b.datetime.seconds);
+    return entries;
+  };
+
+  
   if (!data) {
     return <Loading />
   }
-  return;
+  return <MoodChart data={data}/>;
+
+
 
   const { chartScores, chartDates, averageScore } = data;
 
