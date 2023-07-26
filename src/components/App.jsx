@@ -16,11 +16,10 @@ export default function App() {
       setUser(user);
       setLogged(user !== null);
     });
-  
+
     // cleanup subscription
     return () => unsubscribe();
   }, []);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,67 +38,19 @@ export default function App() {
     querySnapshot.forEach((doc) => {
       entries.push({ id: doc.id, ...doc.data() });
     });
+    entries.sort((a, b) => a.datetime.seconds - b.datetime.seconds);
     return entries;
   };
 
   return (
     <div className="landingContainer">
-      {(logged === true && user !== null)  ? (
+      {logged === true && user !== null ? (
         <div>{loading ? <Loading /> : <Banner data={data} />}</div>
       ) : (
         <div>
-          <Authenticator setUser={setUser}/>
+          <Authenticator setUser={setUser} />
         </div>
       )}
     </div>
   );
 }
-
-// stashing here for preservation
-
-/*
-
-    const getEntries = async () => {
-      if (logged) {
-        const user = auth.currentUser;
-        const q = query(collection(db, "Users", user.uid, "Entries"));
-        try {
-          const querySnapshot = await getDocs(q);
-          const entriesData = [];
-          querySnapshot.forEach((doc) => {
-            entriesData.push({id: doc.id, ...doc.data()});
-          });
-
-          const convertedEntries = entriesData.map((entry) => {
-            const datetime = new Date(entry.datetime.seconds * 1000);
-            const localDatetime = datetime.toLocaleString();
-            return {
-              ...entry,
-              datetime: localDatetime,
-            };
-          });
-
-          convertedEntries.sort((a, b) => {
-            return new Date(a.datetime) - new Date(b.datetime);
-          });
-
-          const chartDates = convertedEntries.map((entry) => entry.datetime);
-          const chartScores = convertedEntries.map((entry) => entry.value);
-          const averageScore = getAverageScore(
-            convertedEntries.map((entry) => entry.value)
-          );
-          const notes = convertedEntries.map((entry) => entry.note);
-
-          setChartData({
-            chartScores,
-            chartDates,
-            averageScore,
-            notes,
-          });
-          setLoading(false);
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    };
-    */

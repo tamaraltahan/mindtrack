@@ -21,7 +21,7 @@ const Authenticator = ({ setUser }) => {
         setUser(currentUser);
         if (userSnapshot.exists) {
           // User already exists, no need to create a new collection
-          console.log("User already exists");
+          // console.log("User already exists");
         } else {
           const userCollectionRef = db
             .collection("Users")
@@ -30,7 +30,7 @@ const Authenticator = ({ setUser }) => {
           await userCollectionRef.doc("Profile").set({
             email,
           });
-          console.log("User collection created");
+          // console.log("User collection created");
         }
       }
     } catch (err) {
