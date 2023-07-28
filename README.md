@@ -1,6 +1,73 @@
+# MindTrack
+
+### Mental Health Tracking. 
+
+Functionally acts as a Diary with some useful visualization.
+
+Originally inspired by my Fitbit App, I wanted to be able to not only log the mood I was in, but I wanted to be able to keep a log of what I was feeling.
+
+Created entirely in Next.js using NextUI's component library.
+
+Colors may be off since I developed this entire project in Chrome using the forced dark mode for all web pages.
+This is the successor to my failed mobile application which was the same thing, but using React-Native. largely recycled my code from that project to use here.
+
+
+### Data Storage
+
+All storage is handled by Firebase (Firestore). Entries are in plain text, so while other users won't see your data, the admin (me) can.
+Adapting this to being market-ready would require setting up a backend to handle data encryption and decryption which is well outside the scope of my project (for no other reason than hosting).
+
+### OAuth
+
+Using the Application as is requires a google account to sign in with. Effectively needs a login to access the app.
+
+
+# cloning
+
+To clone this project you will need to set up your own Firebase project to get a configuration file from Firebase.
+
+in src, set up config/Firebase.js
+
+Will look like
+
+```js
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "xxx",
+  authDomain: "xxx,
+  projectId: "xxx",
+  storageBucket: "xxx",
+  messagingSenderId: "xxx",
+  appId: "xxx",
+  measurementId: "xxx",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);
+
+```
+
+
+### And of course the Next.js Boilerplate
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+### Getting Started
 
 First, run the development server:
 
