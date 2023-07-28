@@ -102,10 +102,11 @@ const Entry = () => {
             onChange={(e) => handleChange(e.target.value)}
             className="entryInput"
             helperText="optional"
+            helperColor="white"
             value={textEntry}
           />
         </div>
-        <Text className="wordCount" style={{ textAlign: "right" }}>
+        <Text  css={{color:"white"}} className="wordCount" style={{ textAlign: "right" }}>
           Word Count: {wordCount}
         </Text>
       </div>
