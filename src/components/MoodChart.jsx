@@ -33,8 +33,45 @@ const MoodChart = ({ data }) => {
   };
 
   const options = {
+    scales: {
+      y: {
+        min: -3,
+        max: 2,
+        ticks: {
+          stepSize: 1,
+          font: {
+            size: 20, // Set the size of the emoji labels
+          },
+          callback: function (value) {
+            switch (value) {
+              case 2:
+                return "😁";
+              case 1:
+                return "🙂";
+              case 0:
+                return "😐";
+              case -1:
+                return "☹️";
+              case -2:
+                return "😭";
+              case -3:
+                return "💀"; // Add your sixth emoji here
+              default:
+                return "";
+            }
+          },
+          padding: 10,
+        },
+      },
+      x: {
+        ticks: {
+          maxRotation: 45, // Set the maximum rotation of the x-axis labels
+          minRotation: 45, // Set the minimum rotation of the x-axis labels
+        },
+      },
+    },
     plugins: {
-      legend: { display: false }, // Hide legend
+      legend: { display: false },
       tooltip: {
         callbacks: {
           label: function (context) {
