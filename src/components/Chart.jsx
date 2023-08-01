@@ -1,31 +1,25 @@
-import React from "react";
-import { Text, Loading } from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import { Loading, Progress, Text } from "@nextui-org/react";
 import MoodChart from "./MoodChart";
-// import Gauge from "./Gauge";
 
 const Chart = ({ data }) => {
-  
-  const getEntries = async () => {
-    if (!user) return [];
-    const q = query(collection(db, "Users", user.uid, "Entries"));
-    const querySnapshot = await getDocs(q);
-    const entries = [];
-    querySnapshot.forEach((doc) => {
-      entries.push({ id: doc.id, ...doc.data() });
+  const [averageScore, setAverageScore] = useState(0);
+  const [color, setColor] = useState("secondary");
+
+  const getAvg = () => {
+    let avg = 0;
+    data.forEach((entry) => {
+      avg += entry.value;
     });
-    entries.sort((a, b) => a.datetime.seconds - b.datetime.seconds);
-    return entries;
+
+    avg /= data.length;
+    return avg;
   };
 
-  
-  if (!data) {
-    return <Loading />
-  }
-  return <MoodChart data={data}/>;
-
-
-
-  const { chartScores, chartDates, averageScore } = data;
+  useEffect(() => {
+    setAverageScore(getAvg());
+    setColor(getColor((averageScore + 3) / 6));
+  }, []);
 
   const getEmoji = (val) => {
     if (val > 1) {
@@ -43,24 +37,37 @@ const Chart = ({ data }) => {
     }
   };
 
+  const getColor = (val) => {
+    if (val > 1) {
+      return "success";
+    } else if (val > 0 && val < 1) {
+      return "success";
+    } else if (val > -1 && val < 0) {
+      return "warning";
+    } else if (val > -2 && val < -1) {
+      return "danger";
+    } else if (val > -3 && val < -2) {
+      return "danger";
+    } else {
+      return "default";
+    }
+  };
+
+  if (!data) {
+    return <Loading />;
+  }
   return (
-    <div className="container">
-      <Text className="titleText">Mood over time</Text>
-      <MoodChart scores={chartScores} dates={chartDates} />
-      {averageScore !== null ? (
-        <div className="gaugeContainer">
-          {/* <Gauge value={averageScore} /> */}
-        </div>
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      <div className="textContainer">
-        {" "}
-        {/* Use className instead of style */}
-        <Text className="text">
-          Average Mood is: {averageScore} {getEmoji(averageScore)}
+    <div>
+      <MoodChart data={data} />
+      <div className="stats">
+        <Text color="white">
+          Your Average Score is: {getEmoji(averageScore)}
         </Text>
-        <Text className="text">Number of Entries is: {chartScores.length}</Text>
+        <Progress
+          color={color}
+          value={((averageScore + 3) / 6) * 100}
+          css={{ width: 650 }}
+        />
       </div>
     </div>
   );
