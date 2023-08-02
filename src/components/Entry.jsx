@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button, Text, Textarea } from "@nextui-org/react";
 import { db, auth } from "../config/Firebase";
 import { collection, serverTimestamp, addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
+import { Button, Textarea, ButtonGroup } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
 
 const Entry = () => {
@@ -69,7 +69,7 @@ const Entry = () => {
   return (
     <div>
       <div className="emojiContainer">
-        <Button.Group bordered={false} auto ghost color="gradient" size="xl">
+        <ButtonGroup radius="md" color="secondary">
           {emojis.map((emoji, index) => (
             <Button
               key={index}
@@ -78,44 +78,41 @@ const Entry = () => {
                 selectedEmojiIndex === index ? "selectedEmojiContainer" : ""
               }`}
             >
-              <Text
+              <p
                 className={`emoji ${
                   selectedEmojiIndex === index ? "selectedEmoji" : ""
                 }`}
               >
                 {emoji.emoji}
-              </Text>
+              </p>
             </Button>
           ))}
-        </Button.Group>
+        </ButtonGroup>
       </div>
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Textarea
-            size="xl"
-            bordered
-            borderWeight="10"
-            width="90%"
-            height="300px"
-            color="default"
+            className="entryInput"
+            size="lg"
+            description="optional"
             placeholder="Log your thoughts"
             onChange={(e) => handleChange(e.target.value)}
-            className="entryInput"
-            helperText="optional"
-            helperColor="white"
             value={textEntry}
+            minRows={10}
           />
         </div>
-        <Text  css={{color:"white"}} className="wordCount" style={{ textAlign: "right" }}>
+        <p className="wordCount" style={{ textAlign: "right", color: "white" }}>
           Word Count: {wordCount}
-        </Text>
+        </p>
       </div>
 
       <div className="buttonContainer">
         <Button
           onPress={() => handleSubmit(score, textEntry)}
-          title="Submit"
-          disabled={selectedEmojiIndex === null}
+          isDisabled={selectedEmojiIndex === null}
+          size="lg"
+          color="primary"
+          fullWidth={true}
         >
           Submit
         </Button>

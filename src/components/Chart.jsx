@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Loading, Progress, Text } from "@nextui-org/react";
+import { Spinner, Progress } from "@nextui-org/react";
 import MoodChart from "./MoodChart";
 
 const Chart = ({ data }) => {
@@ -54,15 +54,15 @@ const Chart = ({ data }) => {
   };
 
   if (!data) {
-    return <Loading />;
+    return <Spinner />;
   }
   return (
     <div>
       <MoodChart data={data} />
       <div className="stats">
-        <Text color="white">
+        <p color="white">
           Your Average Score is: {getEmoji(averageScore)}
-        </Text>
+        </p>
         <Progress
           color={color}
           value={((averageScore + 3) / 6) * 100}
