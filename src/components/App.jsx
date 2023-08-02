@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Banner from "./Banner";
+import Banner from "./Banner"
 import Authenticator from "./Authenticator";
 import { auth, db } from "../config/Firebase";
 import { onSnapshot, query, collection } from "firebase/firestore";
-import { Loading } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react"
 
 export default function App() {
   const [logged, setLogged] = useState(false);
@@ -45,7 +45,7 @@ export default function App() {
     <div className="landingContainer">
       {logged === true && user !== null ? (
         <div>
-          {loading ? <Loading /> : <Banner data={data} setData={setData} />}
+          {loading ? <Spinner /> : <Banner data={data} setData={setData} />}
         </div>
       ) : (
         <div>

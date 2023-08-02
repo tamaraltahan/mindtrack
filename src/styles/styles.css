@@ -78,8 +78,6 @@
 .entryContainer {
   display: flex;
   flex-direction: row;
-  border-width: 5px;
-  border-color: white;
   justify-content: center;
   align-items: center;
   min-height: 60px;
@@ -88,7 +86,6 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 50px;
-  border-radius: 25px;
 }
 
 .emojiContainer {
@@ -101,7 +98,7 @@
 
 
 .selectedEmojiContainer {
-  background-color: lightblue;
+  background-color: rgb(15, 219, 219);
   border-radius: 20px;
 }
 
@@ -109,24 +106,20 @@
   font-size: 35px;
 }
 
-.selectedEmoji {
-  color: white;
-}
-
 .buttonContainer {
   margin-top: 50px;
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
 }
 
 .entryInput {
-    height:250px; 
     margin:5px; 
-    border-width:5px; 
-    border-color:rgb(56, 55, 55); 
     padding:2px; 
     border-radius:20px; 
     padding-top:15px; 

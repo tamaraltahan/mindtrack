@@ -1,6 +1,6 @@
 import { signInWithRedirect, signOut } from "firebase/auth";
 import { googleProvider, db, auth } from "../config/Firebase";
-import { Image, Text } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 
 const imgSrc = "/images/btn_google_signin_dark_focus_web2x.png";
 
@@ -9,7 +9,6 @@ const Authenticator = ({ setUser }) => {
     try {
       await signInWithRedirect(auth, googleProvider);
       const currentUser = auth.currentUser;
-
       if (currentUser) {
         const googleUserId = currentUser.uid;
         const email = currentUser.email;
@@ -17,7 +16,6 @@ const Authenticator = ({ setUser }) => {
         // Check if the user already exists
         const userRef = db.collection("Users").doc(googleUserId);
         const userSnapshot = await userRef.get();
-        // propsuserState(currentUser);
         setUser(currentUser);
         if (userSnapshot.exists) {
           // User already exists, no need to create a new collection
@@ -30,7 +28,6 @@ const Authenticator = ({ setUser }) => {
           await userCollectionRef.doc("Profile").set({
             email,
           });
-          // console.log("User collection created");
         }
       }
     } catch (err) {
@@ -61,12 +58,12 @@ const Authenticator = ({ setUser }) => {
               onClick={() => logout()}
               alt="sign out button"
             />
-            <Text>Log Out</Text>
+            <p style={{ marginTop: 10}}>Log Out</p>
           </div>
         </div>
       ) : (
         <div className="containerCenter">
-          <Text className="text">Please sign in to get started</Text>
+          <p className="text">Please sign in to get started</p>
           <img
             className="googleButton"
             src={imgSrc}

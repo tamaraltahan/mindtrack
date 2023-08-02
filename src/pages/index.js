@@ -1,11 +1,14 @@
+import { Inter } from "next/font/google";
+import App from "../components/App";
+import { NextUIProvider } from "@nextui-org/react";
 
-import { Inter } from 'next/font/google'
-import App from "../components/App"
-
-const inter = Inter({ subsets: ['latin'] })
+// eslint-disable-next-line no-unused-vars
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <App />
-  )
+    <NextUIProvider>
+      <App />
+    </NextUIProvider>
+  );
 }

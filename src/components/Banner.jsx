@@ -14,12 +14,12 @@ const Banner = ({ data, setData }) => {
 
   const renderSelectedComponent = () => {
     if (activeTab === "New Entry") {
-      return <Entry setData={setData}/>;
+      return <Entry setData={setData} />;
     } else if (activeTab === "Chart") {
       return <Chart data={data} />;
     } else {
       // return <History data={data} dbSnap={snap} />;
-      return <History data={data} setData={setData}/>;
+      return <History data={data} setData={setData} />;
     }
   };
 
@@ -27,29 +27,29 @@ const Banner = ({ data, setData }) => {
     <div style={{ flex: 1 }}>
       <div style={{ display: "flex" }}>
         <Button
-          flat
-          bordered={activeTab === "New Entry"}
+          variant={activeTab === "New Entry" ? "bordered" : "flat"}
           onPress={() => handleTabChange("New Entry")}
-          style={{ flex: 1, justifyContent: "center", height:50 }}
-          css={{borderRadius:0}}
+          style={{ flex: 1, justifyContent: "center", height: 50 }}
+          radius="none"
+          color="primary"
         >
           New Entry
         </Button>
         <Button
-          flat
-          bordered={activeTab === "Chart"}
+          variant={activeTab === "Chart" ? "bordered" : "flat"}
           onPress={() => handleTabChange("Chart")}
-          style={{ flex: 1, justifyContent: "center", height:50 }}
-          css={{borderRadius:0}}
+          style={{ flex: 1, justifyContent: "center", height: 50 }}
+          radius="none"
+          color="primary"
         >
           Chart
         </Button>
         <Button
-          flat
-          bordered={activeTab === "History"}
+          variant={activeTab === "History" ? "bordered" : "flat"}
           onPress={() => handleTabChange("History")}
-          style={{ flex: 1, justifyContent: "center" , height:50}}
-          css={{borderRadius:0}}
+          style={{ flex: 1, justifyContent: "center", height: 50 }}
+          radius="none"
+          color="primary"
         >
           History
         </Button>
