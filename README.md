@@ -62,9 +62,11 @@ export const db = getFirestore(app);
 
 ```
 
+### Known Bugs
 
-### And of course the Next.js Boilerplate
+Table will auto sort on deleting an entry. Only way I know how to fix it is with using a state manager which is too high a time investment for such a small bug.
 
+---
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ### Getting Started
