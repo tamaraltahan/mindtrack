@@ -7,9 +7,7 @@ Functionally acts as a Diary with some useful visualization.
 Originally inspired by my Fitbit App, I wanted to be able to not only log the mood I was in, but I wanted to be able to keep a log of what I was feeling.
 
 Created entirely in Next.js using NextUI's component library.
-
-Colors may be off since I developed this entire project in Chrome using the forced dark mode for all web pages.
-This is the successor to my failed mobile application which was the same thing, but using React-Native. largely recycled my code from that project to use here.
+Updated to NextUI 2.0
 
 
 ### Data Storage
