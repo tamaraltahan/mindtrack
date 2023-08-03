@@ -90,7 +90,15 @@ const Entry = () => {
         </ButtonGroup>
       </div>
       <div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "60%",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
           <Textarea
             className="entryInput"
             size="lg"
@@ -98,7 +106,7 @@ const Entry = () => {
             placeholder="Log your thoughts"
             onChange={(e) => handleChange(e.target.value)}
             value={textEntry}
-            minRows={10}
+            minRows={15}
           />
         </div>
         <p className="wordCount" style={{ textAlign: "right", color: "white" }}>
