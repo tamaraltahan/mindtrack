@@ -1,9 +1,7 @@
 // External imports
-import { useState } from "react";
-import { db, auth } from "../config/Firebase";
+import { useState, useEffect } from "react";
 import {
   Button,
-  Container,
   Spinner,
   Table,
   TableBody,
@@ -12,119 +10,185 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
+  getKeyValue,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from "@nextui-org/react";
-import { deleteDoc, doc, getDoc, Timestamp } from "firebase/firestore";
+import { useAsyncList } from "@react-stately/data";
 
 // Internal imports
 import { DeleteIcon } from "./icons/DeleteIcon";
 import { EyeIcon } from "./icons/EyeIcon";
-import NoteModal from "./NoteModal";
 
-const History = ({ data, setData }) => {
-  const [sortDescriptor, setSortDescriptor] = useState({
-    column: "datetime",
-    direction: "descending",
-  });
+const History = ({ data, deleteItem }) => {
+  useEffect(() => {
+    list.reload();
+  }, [data]);
+
+  const [isSorted, setIsSorted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedItem, setSelectedItem] = useState(null);
-  const user = auth.currentUser;
 
-  const deleteItem = async (id) => {
-    try {
-      const docRef = doc(db, "Users", user.uid, "Entries", id);
-      const docSnap = await getDoc(docRef);
+  let list = useAsyncList({
+    async load() {
+      setIsLoading(false);
+      const items = data;
+      return {
+        items,
+      };
+    },
+    async sort({ items, sortDescriptor }) {
+      return {
+        items: items.sort((a, b) => {
+          let first = a[sortDescriptor.column];
+          let second = b[sortDescriptor.column];
+          let cmp =
+            (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
 
-      if (docSnap.exists()) {
-        await deleteDoc(docRef);
-        setData(data.filter((item) => item.id !== id));
-      } else {
-        console.log("No such document!");
-      }
-    } catch (error) {
-      console.error("Error deleting document: ", error);
+          if (sortDescriptor.direction === "descending") {
+            cmp *= -1;
+          }
+          return cmp;
+        }),
+      };
+    },
+  });
+
+  useEffect(() => {
+    if (!isSorted && list.items.length > 0) {
+      list.sort({ column: "datetime", direction: "descending" });
+      setIsSorted(true);
+    }
+  }, [isSorted, list.items]);
+
+  const getEmojiFromValue = (value) => {
+    switch (value) {
+      case 2:
+        return "😁";
+      case 1:
+        return "🙂";
+      case 0:
+        return "😐";
+      case -1:
+        return "☹️";
+      case -2:
+        return "😭";
+      case -3:
+        return "💀";
+      default:
+        return "";
     }
   };
 
-  const openModal = (value, date, note) => {
-    setSelectedItem({ value, datetime: date, note });
-  };
-
-  if (!data) return <Spinner />;
-
   return (
-    <div>
-      <Container>
-        <Table
-          aria-label="Table of Entries"
-          sortDescriptor={sortDescriptor}
-          onSortChange={setSortDescriptor}
-          color={"secondary"}
+    <>
+      <Table
+        aria-label="Entry Table"
+        sortDescriptor={list.sortDescriptor}
+        onSortChange={list.sort}
+        classNames={{
+          table: "min-h-[400px]",
+        }}
+        isStriped
+      >
+        <TableHeader>
+          <TableColumn key="value" allowsSorting>
+            Score
+          </TableColumn>
+          <TableColumn key="note" allowsSorting>
+            Note
+          </TableColumn>
+          <TableColumn key="datetime" allowsSorting>
+            Date
+          </TableColumn>
+          <TableColumn key="Modify">View or Delete</TableColumn>
+        </TableHeader>
+        <TableBody
+          items={list.items}
+          isLoading={isLoading}
+          loadingContent={<Spinner label="Loading..." />}
         >
-          <TableHeader>
-            <TableColumn key="value" allowsSorting>
-              Score
-            </TableColumn>
-            <TableColumn key="note" allowsSorting>
-              Note
-            </TableColumn>
-            <TableColumn key="datetime" allowsSorting>
-              Date
-            </TableColumn>
-            <TableColumn key="delete"></TableColumn>
-          </TableHeader>
-          <TableBody
-            items={sortedData}
-            loadingState="loaded"
-            onLoadMore={() => {}}
-          >
-            {(item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.value}</TableCell>
-                <TableCell>{item.note}</TableCell>
+          {(item) => (
+            <TableRow key={item.name}>
+              {(columnKey) => (
                 <TableCell>
-                  {Timestamp.fromMillis(
-                    item.datetime.seconds * 1000 +
-                      item.datetime.nanoseconds / 1000000
-                  )
-                    .toDate()
-                    .toLocaleString()}
-                </TableCell>
-                <TableCell>
-                  <TableRow>
-                    <TableColumn span={2}>
-                      <Tooltip content="Delete Entry">
-                        <Button isIconOnly onClick={() => deleteItem(item.id)}>
-                          <DeleteIcon />
-                        </Button>
+                  {columnKey === "value" ? (
+                    <span className="emoji-cell">
+                      {getEmojiFromValue(item.value)}
+                    </span>
+                  ) : columnKey === "datetime" ? (
+                    item.datetime.toDate().toLocaleDateString()
+                  ) : columnKey === "Modify" ? (
+                    <div className="relative flex items-center gap-2">
+                      <Tooltip content="Details">
+                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                          <Button
+                            isIconOnly
+                            variant="bordered"
+                            onPress={() => {
+                              setSelectedItem(item);
+                              onOpen();
+                            }}
+                          >
+                            <EyeIcon />
+                          </Button>
+                        </span>
                       </Tooltip>
-                    </TableColumn>
-                    <TableColumn span={1}>
-                      <Tooltip content="View">
-                        <Button
-                          isIconOnly
-                          onClick={() => {
-                            openModal(item.value, item.datetime, item.note);
-                            setVisible(true);
-                          }}
-                        >
-                          <EyeIcon />
-                        </Button>
+                      <Tooltip color="danger" content="Delete entry">
+                        <span className="text-lg text-danger cursor-pointer active:opacity-50 ml-5">
+                          <Button
+                            isIconOnly
+                            color="danger"
+                            variant="bordered"
+                            onPress={() => {
+                              deleteItem(item.id);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </span>
                       </Tooltip>
-                    </TableColumn>
-                  </TableRow>
+                    </div>
+                  ) : (
+                    getKeyValue(item, columnKey)
+                  )}
                 </TableCell>
-              </TableRow>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      {selectedItem && (
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Details
+                </ModalHeader>
+                <ModalBody>
+                  <p>
+                    Date: {selectedItem.datetime.toDate().toLocaleDateString()}
+                  </p>
+                  <p>Score: {getEmojiFromValue(selectedItem.value)}</p>
+                  <p>Note: {selectedItem.note}</p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onClick={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
             )}
-          </TableBody>
-        </Table>
-        {selectedItem && (
-          <NoteModal
-            data={selectedItem}
-            setVisible={setVisible}
-            {...bindings}
-          />
-        )}
-      </Container>
-    </div>
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };
 

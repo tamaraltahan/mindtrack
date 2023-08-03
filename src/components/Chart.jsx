@@ -59,10 +59,8 @@ const Chart = ({ data }) => {
   return (
     <div>
       <MoodChart data={data} />
-      <div className="stats">
-        <p color="white">
-          Your Average Score is: {getEmoji(averageScore)}
-        </p>
+      <div className="stats max-w-xl mx-auto">
+        <p color="white">Your Average Score is: {getEmoji(averageScore)}</p>
         <Progress
           color={color}
           value={((averageScore + 3) / 6) * 100}

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import Banner from "./Banner"
+import Banner from "./Banner";
 import Authenticator from "./Authenticator";
 import { auth, db } from "../config/Firebase";
 import { onSnapshot, query, collection } from "firebase/firestore";
-import { Spinner } from "@nextui-org/react"
+import { Spinner } from "@nextui-org/react";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 
 export default function App() {
   const [logged, setLogged] = useState(false);
@@ -41,11 +42,33 @@ export default function App() {
     }
   }, [user]);
 
+  const deleteItem = async (id) => {
+    try {
+      const docRef = doc(db, "Users", user.uid, "Entries", id);
+      const docSnap = await getDoc(docRef);
+
+      // Check if document exists before deleting
+      if (docSnap.exists()) {
+        await deleteDoc(docRef);
+        // Use a functional update here
+        setData((prevData) => prevData.filter((item) => item.id !== id));
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
+
   return (
     <div className="landingContainer">
       {logged === true && user !== null ? (
         <div>
-          {loading ? <Spinner /> : <Banner data={data} setData={setData} />}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Banner data={data} deleteItem={deleteItem} />
+          )}
         </div>
       ) : (
         <div>

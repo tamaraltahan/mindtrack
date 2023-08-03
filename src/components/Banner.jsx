@@ -5,7 +5,7 @@ import History from "./History";
 import Authenticator from "./Authenticator";
 import { Button } from "@nextui-org/react";
 
-const Banner = ({ data, setData }) => {
+const Banner = ({ data, deleteItem }) => {
   const [activeTab, setActiveTab] = useState("New Entry");
 
   const handleTabChange = (tabName) => {
@@ -14,12 +14,12 @@ const Banner = ({ data, setData }) => {
 
   const renderSelectedComponent = () => {
     if (activeTab === "New Entry") {
-      return <Entry setData={setData} />;
+      return <Entry/>;
     } else if (activeTab === "Chart") {
       return <Chart data={data} />;
     } else {
       // return <History data={data} dbSnap={snap} />;
-      return <History data={data} setData={setData} />;
+      return <History data={data} deleteItem={deleteItem} />;
     }
   };
 
