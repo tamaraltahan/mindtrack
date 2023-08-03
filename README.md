@@ -7,9 +7,7 @@ Functionally acts as a Diary with some useful visualization.
 Originally inspired by my Fitbit App, I wanted to be able to not only log the mood I was in, but I wanted to be able to keep a log of what I was feeling.
 
 Created entirely in Next.js using NextUI's component library.
-
-Colors may be off since I developed this entire project in Chrome using the forced dark mode for all web pages.
-This is the successor to my failed mobile application which was the same thing, but using React-Native. largely recycled my code from that project to use here.
+Updated to NextUI 2.0
 
 
 ### Data Storage
@@ -62,9 +60,11 @@ export const db = getFirestore(app);
 
 ```
 
+### Known Bugs
 
-### And of course the Next.js Boilerplate
+Table will auto sort on deleting an entry. Only way I know how to fix it is with using a state manager which is too high a time investment for such a small bug.
 
+---
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ### Getting Started
