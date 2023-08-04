@@ -58,7 +58,7 @@ const Authenticator = ({ setUser }) => {
               onClick={() => logout()}
               alt="sign out button"
             />
-            <p style={{ marginTop: 10}}>Log Out</p>
+            <p style={{ marginTop: 10 }}>Log Out</p>
           </div>
         </div>
       ) : (
