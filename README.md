@@ -23,42 +23,7 @@ Using the Application as is requires a google account to sign in with. Effective
 # cloning
 
 To clone this project you will need to set up your own Firebase project to get a configuration file from Firebase.
-
-in src, set up config/Firebase.js
-
-Will look like
-
-```js
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "xxx",
-  authDomain: "xxx,
-  projectId: "xxx",
-  storageBucket: "xxx",
-  messagingSenderId: "xxx",
-  appId: "xxx",
-  measurementId: "xxx",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
-export const db = getFirestore(app);
-
-```
+Create the file, `.env.local` in the root folder of the project, then set the key value pairs that coincide with the ones in /src/config/Firebase.js
 
 ### Known Bugs
 
