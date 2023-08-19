@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, defaults } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
+ChartJS.defaults.maintainAspectRatio = false;
+
 const MoodChart = ({ data }) => {
+
   const chartData = {
     labels: data.map((entry) => entry.datetime.toDate().toLocaleDateString()),
     datasets: [
@@ -33,6 +36,8 @@ const MoodChart = ({ data }) => {
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: true,
     scales: {
       y: {
         min: -3,
@@ -85,7 +90,7 @@ const MoodChart = ({ data }) => {
   };
 
   return (
-    <div>
+    <div style={{ height: "100%", width: "100%" }}>
       <Line data={chartData} options={options} height={85} />
     </div>
   );

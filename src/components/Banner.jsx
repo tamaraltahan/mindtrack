@@ -14,11 +14,10 @@ const Banner = ({ data, deleteItem }) => {
 
   const renderSelectedComponent = () => {
     if (activeTab === "New Entry") {
-      return <Entry/>;
+      return <Entry />;
     } else if (activeTab === "Chart") {
       return <Chart data={data} />;
     } else {
-      // return <History data={data} dbSnap={snap} />;
       return <History data={data} deleteItem={deleteItem} />;
     }
   };
@@ -55,7 +54,7 @@ const Banner = ({ data, deleteItem }) => {
         </Button>
       </div>
       <Authenticator />
-      <div style={{ flex: 1, marginTop: 50 }}>{renderSelectedComponent()}</div>
+      <div style={{ flex: 1, marginTop: 50, overflow: 'auto' }}>{renderSelectedComponent()}</div>
     </div>
   );
 };

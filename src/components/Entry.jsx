@@ -69,32 +69,31 @@ const Entry = () => {
   return (
     <div>
       <div className="emojiContainer">
-        <ButtonGroup radius="md" color="secondary">
-          {emojis.map((emoji, index) => (
-            <Button
-              key={index}
-              onPress={() => handleEmojiPress(emoji.value, index)}
-              className={`emojiContainer ${
-                selectedEmojiIndex === index ? "selectedEmojiContainer" : ""
+        {emojis.map((emoji, index) => (
+          <div
+            key={index}
+            onClick={() => handleEmojiPress(emoji.value, index)}
+            className={`emojiItem ${
+              selectedEmojiIndex === index ? "selectedEmojiContainer" : ""
+            }`}
+          >
+            <p
+              className={`emoji ${
+                selectedEmojiIndex === index ? "selectedEmoji" : ""
               }`}
             >
-              <p
-                className={`emoji ${
-                  selectedEmojiIndex === index ? "selectedEmoji" : ""
-                }`}
-              >
-                {emoji.emoji}
-              </p>
-            </Button>
-          ))}
-        </ButtonGroup>
+              {emoji.emoji}
+            </p>
+          </div>
+        ))}
       </div>
+
       <div>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            width: "60%",
+            width: "75%",
             marginLeft: "auto",
             marginRight: "auto",
           }}
@@ -106,7 +105,7 @@ const Entry = () => {
             placeholder="Log your thoughts"
             onChange={(e) => handleChange(e.target.value)}
             value={textEntry}
-            minRows={15}
+            minRows={8}
           />
         </div>
         <p className="wordCount" style={{ textAlign: "right", color: "white" }}>
@@ -118,7 +117,7 @@ const Entry = () => {
         <Button
           onPress={() => handleSubmit(score, textEntry)}
           isDisabled={selectedEmojiIndex === null}
-          size="lg"
+          size="md"
           color="primary"
           fullWidth={true}
         >

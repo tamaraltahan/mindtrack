@@ -58,7 +58,9 @@ const Chart = ({ data }) => {
   }
   return (
     <div>
-      <MoodChart data={data} />
+      <div style={{ height: "60vh" }}>
+        <MoodChart data={data} />
+      </div>
       <div className="stats max-w-xl mx-auto">
         <p color="white">Your Average Score is: {getEmoji(averageScore)}</p>
         <Progress
