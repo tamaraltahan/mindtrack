@@ -2,7 +2,7 @@ import { useState } from "react";
 import { db, auth } from "../config/Firebase";
 import { collection, serverTimestamp, addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-import { Button, Textarea, ButtonGroup } from "@nextui-org/react";
+import { Button, Textarea } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
 
 const Entry = () => {

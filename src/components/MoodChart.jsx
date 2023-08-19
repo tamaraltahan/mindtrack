@@ -45,7 +45,7 @@ const MoodChart = ({ data }) => {
         ticks: {
           stepSize: 1,
           font: {
-            size: 20, // Set the size of the emoji labels
+            size: 20,
           },
           callback: function (value) {
             switch (value) {
@@ -60,7 +60,7 @@ const MoodChart = ({ data }) => {
               case -2:
                 return "😭";
               case -3:
-                return "💀"; // Add your sixth emoji here
+                return "💀"; 
               default:
                 return "";
             }
@@ -70,8 +70,8 @@ const MoodChart = ({ data }) => {
       },
       x: {
         ticks: {
-          maxRotation: 45, // Set the maximum rotation of the x-axis labels
-          minRotation: 45, // Set the minimum rotation of the x-axis labels
+          maxRotation: 45,
+          minRotation: 45,
         },
       },
     },
