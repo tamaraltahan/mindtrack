@@ -25,6 +25,9 @@ import { DeleteIcon } from "./icons/DeleteIcon";
 import { EyeIcon } from "./icons/EyeIcon";
 
 const History = ({ data, deleteItem }) => {
+
+  const substringLength = 26;
+
   useEffect(() => {
     list.reload();
   }, [data]);
@@ -123,6 +126,12 @@ const History = ({ data, deleteItem }) => {
                     </span>
                   ) : columnKey === "datetime" ? (
                     item.datetime.toDate().toLocaleDateString()
+                  ) : columnKey === "note" ? (
+                    <span title={item.note}>
+                      {item.note.length > substringLength
+                        ? `${item.note.substring(0, substringLength)}...`
+                        : item.note}
+                    </span>
                   ) : columnKey === "Modify" ? (
                     <div className="relative flex items-center gap-2">
                       <Tooltip content="Details">

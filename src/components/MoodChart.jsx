@@ -4,10 +4,9 @@ import React from "react";
 import { Line, defaults } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
-ChartJS.defaults.maintainAspectRatio = false;
+
 
 const MoodChart = ({ data }) => {
-
   const chartData = {
     labels: data.map((entry) => entry.datetime.toDate().toLocaleDateString()),
     datasets: [
@@ -37,7 +36,13 @@ const MoodChart = ({ data }) => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 20,
+        bottom: 20
+      }
+    },
     scales: {
       y: {
         min: -3,
@@ -60,7 +65,7 @@ const MoodChart = ({ data }) => {
               case -2:
                 return "😭";
               case -3:
-                return "💀"; 
+                return "💀";
               default:
                 return "";
             }
@@ -90,7 +95,7 @@ const MoodChart = ({ data }) => {
   };
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "50vh", width: "100%" }}>
       <Line data={chartData} options={options} height={85} />
     </div>
   );
