@@ -10,7 +10,17 @@ Originally inspired by my Fitbit App, I wanted to be able to not only log the mo
 Created entirely in Next.js using NextUI's component library.
 Updated to NextUI 2.0
 
+### New Entry
+![entry](https://github.com/tamaraltahan/mindtrack/assets/3060378/11078163-a55f-423d-9112-26c4c8a8191e)
 
+### Chart
+![chart](https://github.com/tamaraltahan/mindtrack/assets/3060378/48a22ffe-dc51-41d8-ac24-3b18d8b83252)
+
+### History
+![history](https://github.com/tamaraltahan/mindtrack/assets/3060378/fcba7bc8-2249-4abb-8961-3fd031f30b8e)
+
+### Individual entry view
+![modal](https://github.com/tamaraltahan/mindtrack/assets/3060378/06dedf99-67b9-4753-bed0-ba8967bb4130)
 
 ### Data Storage
 
@@ -21,15 +31,26 @@ Adapting this to being market-ready would require setting up a backend to handle
 
 Using the Application as is requires a google account to sign in with. Effectively needs a login to access the app.
 
-
 # cloning
 
 To clone this project you will need to set up your own Firebase project to get a configuration file from Firebase.
 Create the file, `.env.local` in the root folder of the project, then set the key value pairs that coincide with the ones in /src/config/Firebase.js
 
-### Known Bugs
+# Misc
+
+#### Known Bugs
 
 Table will auto sort on deleting an entry. Only way I know how to fix it is with using a state manager which is too high a time investment for such a small bug.
+
+#### Future plans
+1. Add an insights tab - include some stats.\
+   a. entry count\
+   b. month with the most given entries\
+   c. best and worst days of the week\
+   d. variance between seasons\
+2. Debating on adding an anonymous mode where anyone can contribute an entry to a 'global' user so users can interact with the site without logging in. This invites risk, may choose to display a dummy profile which cannot be edited by end users.
+3. minor fixes including cleaning up the logout button, change the cursor highlight on the emojis to not be text
+   
 
 ---
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
