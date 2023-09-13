@@ -2,12 +2,14 @@
 
 ### Mental Health Tracking. 
 
-Functionally acts as a Diary with some useful visualization.
+Welcome to MindTrack. This is a web application which functions as a digital diary. 
+Write in entrties, or simply leave an emoji as a record of how you're feeling for the day which you can view as a graph over time to get an idea of how your mental health has been over a period of time, or view it in a compact chart.
+Sort through your best and worst days, check our your notes, and get a better understanding of which days have the most impact for you.
 
 Originally inspired by my Fitbit App, I wanted to be able to not only log the mood I was in, but I wanted to be able to keep a log of what I was feeling.
-
 Created entirely in Next.js using NextUI's component library.
 Updated to NextUI 2.0
+
 
 
 ### Data Storage
