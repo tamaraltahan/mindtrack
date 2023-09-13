@@ -4,8 +4,6 @@ import React from "react";
 import { Line, defaults } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
-
-
 const MoodChart = ({ data }) => {
   const chartData = {
     labels: data.map((entry) => entry.datetime.toDate().toLocaleDateString()),
@@ -35,14 +33,9 @@ const MoodChart = ({ data }) => {
   };
 
   const options = {
-    responsive: true,
     maintainAspectRatio: false,
-    layout: {
-      padding: {
-        top: 20,
-        bottom: 20
-      }
-    },
+    responsive: true,
+    clip: false,
     scales: {
       y: {
         min: -3,
@@ -94,11 +87,12 @@ const MoodChart = ({ data }) => {
     },
   };
 
-  return (
-    <div style={{ height: "50vh", width: "100%" }}>
-      <Line data={chartData} options={options} height={85} />
-    </div>
-  );
+return (
+  <div style={{ height: "60vh", width: "100%" }}>
+    <Line data={chartData} options={options} height={85} />
+  </div>
+);
+
 };
 
 export default MoodChart;
