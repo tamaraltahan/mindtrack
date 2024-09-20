@@ -25,7 +25,6 @@ import { DeleteIcon } from "./icons/DeleteIcon";
 import { EyeIcon } from "./icons/EyeIcon";
 
 const History = ({ data, deleteItem }) => {
-
   const substringLength = 26;
 
   useEffect(() => {

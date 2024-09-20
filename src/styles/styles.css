@@ -159,3 +159,24 @@
 .emoji-cell {
   font-size: 25px;
 }
+
+.welcomeBanner{
+  font-size: 55px;
+}
+
+@keyframes grow-shrink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-grow-shrink {
+  display: inline-block;
+  animation: grow-shrink 1s ease-in-out;
+}

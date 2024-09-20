@@ -1,13 +1,21 @@
-import { signInWithRedirect, signOut } from "firebase/auth";
+import { signInWithRedirect, signInWithPopup, signOut } from "firebase/auth";
 import { googleProvider, db, auth } from "../config/Firebase";
 import { Image } from "@nextui-org/react";
 
 const imgSrc = "/images/btn_google_signin_dark_focus_web2x.png";
 
 const Authenticator = ({ setUser }) => {
+  const isMobileDevice = () => {
+    return /Mobi|Android/i.test(navigator.userAgent);
+  };
+
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider);
+      if (isMobileDevice()) {
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        await signInWithPopup(auth, googleProvider);
+      }
       const currentUser = auth.currentUser;
       if (currentUser) {
         const googleUserId = currentUser.uid;
@@ -57,15 +65,16 @@ const Authenticator = ({ setUser }) => {
               src={auth?.currentUser?.photoURL}
               onClick={() => logout()}
               alt="sign out button"
+              className="cursor-pointer ..."
             />
-            <p style={{ marginTop: 10}}>Log Out</p>
+            <p style={{ marginTop: 10 }}>Log Out</p>
           </div>
         </div>
       ) : (
         <div className="containerCenter">
           <p className="text">Please sign in to get started</p>
           <img
-            className="googleButton"
+            className="googleButton cursor-pointer"
             src={imgSrc}
             onClick={signInWithGoogle}
             referrerPolicy="no-referrer"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Banner from "./Banner";
 import Authenticator from "./Authenticator";
+import Welcome from "./Welcome";
 import { auth, db } from "../config/Firebase";
 import { onSnapshot, query, collection } from "firebase/firestore";
 import { Spinner } from "@nextui-org/react";
@@ -72,7 +73,8 @@ export default function App() {
         </div>
       ) : (
         <div>
-          <Authenticator setUser={setUser} />
+          <Welcome />
+          {/* <Authenticator setUser={setUser} /> */}
         </div>
       )}
     </div>
