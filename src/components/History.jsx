@@ -1,4 +1,4 @@
-// External imports
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -19,8 +19,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
-
-// Internal imports
 import { DeleteIcon } from "./icons/DeleteIcon";
 import { EyeIcon } from "./icons/EyeIcon";
 
@@ -35,6 +33,7 @@ const History = ({ data, deleteItem }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedItem, setSelectedItem] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   let list = useAsyncList({
     async load() {
@@ -88,7 +87,7 @@ const History = ({ data, deleteItem }) => {
   };
 
   return (
-    <>
+    <div>
       <Table
         aria-label="Entry Table"
         sortDescriptor={list.sortDescriptor}
@@ -133,7 +132,7 @@ const History = ({ data, deleteItem }) => {
                     </span>
                   ) : columnKey === "Modify" ? (
                     <div className="relative flex items-center gap-2">
-                      <Tooltip content="Details">
+                      <Tooltip content="View Note">
                         <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                           <Button
                             isIconOnly
@@ -147,6 +146,7 @@ const History = ({ data, deleteItem }) => {
                           </Button>
                         </span>
                       </Tooltip>
+
                       <Tooltip color="danger" content="Delete entry">
                         <span className="text-lg text-danger cursor-pointer active:opacity-50 ml-5">
                           <Button
@@ -154,7 +154,8 @@ const History = ({ data, deleteItem }) => {
                             color="danger"
                             variant="bordered"
                             onPress={() => {
-                              deleteItem(item.id);
+                              setSelectedItem(item);
+                              setDeleteModalOpen(true);
                             }}
                           >
                             <DeleteIcon />
@@ -196,7 +197,44 @@ const History = ({ data, deleteItem }) => {
           </ModalContent>
         </Modal>
       )}
-    </>
+      {selectedItem && (
+        <Modal
+          isOpen={deleteModalOpen}
+          onOpenChange={setDeleteModalOpen}
+          backdrop="blur"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Confirm
+                </ModalHeader>
+                <ModalBody>
+                  <p>Delete this entry?</p>
+                </ModalBody>
+                <ModalFooter className="gap-x-4">
+                  <Button
+                    color="primary"
+                    onClick={() => setDeleteModalOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      deleteItem(selectedItem.id);
+                      setDeleteModalOpen(false);
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
+    </div>
   );
 };
 
