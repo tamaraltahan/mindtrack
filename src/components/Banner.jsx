@@ -53,8 +53,13 @@ const Banner = ({ data, deleteItem }) => {
           History
         </Button>
       </div>
+      <div className="flex justify-center items-center h-24 select-none">
+        <h1 className="text-5xl">MindTrack</h1>
+      </div>
       <Authenticator />
-      <div style={{ flex: 1, marginTop: 50, overflow: 'auto' }}>{renderSelectedComponent()}</div>
+      <div style={{ flex: 1, marginTop: 50, overflow: "auto" }}>
+        {renderSelectedComponent()}
+      </div>
     </div>
   );
 };
