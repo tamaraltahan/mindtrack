@@ -78,7 +78,7 @@ const Entry = () => {
             }`}
           >
             <p
-              className={`emoji ${
+              className={`emoji cursor-pointer ${
                 selectedEmojiIndex === index ? "selectedEmoji" : ""
               }`}
             >
