@@ -1,14 +1,23 @@
-import { signInWithRedirect, signInWithPopup, signOut } from "firebase/auth";
+import { signInWithRedirect, signInWithPopup } from "firebase/auth";
 import { googleProvider, db, auth } from "../config/Firebase";
-import { Image } from "@nextui-org/react";
+import UserMenu from "./UserMenu";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const imgSrc = "/images/btn_google_signin_dark_focus_web2x.png";
 
 const Authenticator = ({ setUser }) => {
+
+  useEffect(() => {
+    console.log("Authenticator component setUser:", typeof setUser);
+  }, []);
+
+  const [currentUser, setCurrentUser] = useState(null);
+
   const isMobileDevice = () => {
     return /Mobi|Android/i.test(navigator.userAgent);
   };
-
+  
   const signInWithGoogle = async () => {
     try {
       if (isMobileDevice()) {
@@ -16,7 +25,7 @@ const Authenticator = ({ setUser }) => {
       } else {
         await signInWithPopup(auth, googleProvider);
       }
-      const currentUser = auth.currentUser;
+      setCurrentUser(auth.currentUser);
       if (currentUser) {
         const googleUserId = currentUser.uid;
         const email = currentUser.email;
@@ -42,32 +51,16 @@ const Authenticator = ({ setUser }) => {
       console.error(err);
     }
   };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div>
       {auth.currentUser ? (
         <div className="AuthContainerCenter">
           <div className="containerRight">
-            <Image
-              width={60}
-              height={60}
-              css={{ borderRadius: 20 }}
-              referrerPolicy="no-referrer"
-              src={auth?.currentUser?.photoURL}
-              onClick={() => logout()}
-              alt="sign out button"
-              className="cursor-pointer ..."
+            <UserMenu 
+              authToken={auth.currentUser}
+              setUser={setUser}
+              auth={auth}
             />
-            <p style={{ marginTop: 10 }}>Log Out</p>
           </div>
         </div>
       ) : (
